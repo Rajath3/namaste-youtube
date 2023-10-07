@@ -12,7 +12,7 @@ const Head = () => {
 
   return (
     <div className='grid grid-flow-col'>
-        <div className='flex grid-cols-1'>
+        <div className='grid-cols-1 flex'>
             <img alt='hamburger-menu'
             className='h-16 mt-2 pl-2 pr-4'
             onClick={() => handleClickHamburger()}
@@ -24,14 +24,14 @@ const Head = () => {
             />
         </div>
 
-        <div className='mt-2'>
+        <div className='grid-cols-11'>
             <input type='text' className='border border-gray-500 rounded-l-full w-10/12 mt-4 p-2'/>
             <button className='border border-gray-500 rounded-r-full p-2'>Search</button>
         </div>
 
-        <div className='grid-cols-1 flex justify-end'>
+        <div className='flex grid-cols-1 justify-end'>
             <img alt='user' 
-            className='h-12 mt-4'
+            className='h-12 mt-4 '
             src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCbU49DD_iYcjSUEXG-Oy7POjJzaMn1GYEZg&usqp=CAU'/>
         </div>
     </div>

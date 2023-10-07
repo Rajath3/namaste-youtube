@@ -1,5 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux/es/hooks/useSelector'
+import { Link } from 'react-router-dom';
 
 const Sidebar = () => {
 
@@ -8,10 +9,10 @@ const Sidebar = () => {
   if(!toggleVal) return null;
 
   return (
-    <div className='w-24 p-2 m-2'>
+    <div className='p-2 m-2'>
         <div>
             <ul>
-              <li>Home</li>
+              <Link to='/'><li>Home</li></Link>
               <li>Subscriptions</li>
               <li>Playback</li>
           </ul>

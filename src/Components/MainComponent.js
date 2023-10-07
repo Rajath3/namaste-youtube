@@ -4,7 +4,7 @@ import VideoContainer from './VideoContainer'
 
 const MainComponent = () => {
   return (
-    <div className='grid-cols-11'> 
+    <div> 
         <ButtonList/>
         <VideoContainer/>
     </div>
