@@ -1,10 +1,31 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { toggle } from '../utils/appNavSlice'
+import { YOUTUBE_SEARCH_API } from '../utils/constants'
 
 const Head = () => {
+  const [searchQuery, setSearchQuery] = useState("")
+  const [suggestions, setSuggestions] = useState([])
+  const [showSuggestion, setShowSuggestion] = useState(false)
+
 
   const dispatch = useDispatch()
+
+  const getSuggestions = async () => {
+    const data = await fetch(YOUTUBE_SEARCH_API + searchQuery)
+
+    const json = await data.json()
+
+    setSuggestions(json[1]);
+  }
+
+  useEffect(()=> {
+    const timer = setTimeout(()=> getSuggestions(), 200)
+
+    return () => {
+      clearTimeout(timer);
+    }
+  }, [searchQuery])
 
   const handleClickHamburger = () => {
     dispatch(toggle())
@@ -25,8 +46,23 @@ const Head = () => {
         </div>
 
         <div className='grid-cols-11'>
-            <input type='text' className='border border-gray-500 rounded-l-full w-10/12 mt-4 p-2'/>
+          <div>
+            <input type='text' 
+            className='border border-gray-500 rounded-l-full w-10/12 mt-4 p-2'
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onBlur={()=> setShowSuggestion(false)}
+            onFocus={()=> setShowSuggestion(true)}
+            />
             <button className='border border-gray-500 rounded-r-full p-2'>Search</button>
+          </div>
+
+          {showSuggestion && 
+          <div className='bg bg-white w-[31.2rem] px-4 py-2 m-4 shadow-lg rounded-lg absolute'>
+            <ul>
+              {suggestions.map((s)=> <li key={s} className='py-2'> 🔎 {s}</li>)}
+            </ul>
+          </div>}
         </div>
 
         <div className='flex grid-cols-1 justify-end'>
