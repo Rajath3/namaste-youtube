@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { toggle } from '../utils/appNavSlice'
 import { YOUTUBE_SEARCH_API } from '../utils/constants'
+import { cacheResults } from '../utils/searchSlice'
+
 
 const Head = () => {
   const [searchQuery, setSearchQuery] = useState("")
@@ -11,20 +13,34 @@ const Head = () => {
 
   const dispatch = useDispatch()
 
+  const searchSlice = useSelector(state => state.search);
+
   const getSuggestions = async () => {
     const data = await fetch(YOUTUBE_SEARCH_API + searchQuery)
 
     const json = await data.json()
 
     setSuggestions(json[1]);
+
+    dispatch(cacheResults({
+      [searchQuery]: json[1]
+    }))
   }
 
-  useEffect(()=> {
-    const timer = setTimeout(()=> getSuggestions(), 200)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+       if (searchSlice[searchQuery]) {
+          setSuggestions(searchSlice[searchQuery]);
+        } 
+        else {
+          getSuggestions()
+        }
+      }, 200)
+    
 
-    return () => {
-      clearTimeout(timer);
-    }
+      return () => {
+        clearTimeout(timer);
+      }
   }, [searchQuery])
 
   const handleClickHamburger = () => {
