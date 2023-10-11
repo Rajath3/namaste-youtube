@@ -6,6 +6,8 @@ import store from './utils/store';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import MainComponent from './Components/MainComponent';
 import WatchPage from './Components/WatchPage';
+import Demo from './Components/Demo';
+import Demo2 from './Components/Demo2';
 
 function App() {
 
@@ -20,6 +22,10 @@ function App() {
       {
         path: 'watch',
         element: <WatchPage/>
+      },
+      {
+        path: 'demo',
+        element: <><Demo/><Demo2/></>
       }
     ]
   }])
